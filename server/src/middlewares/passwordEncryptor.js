@@ -2,12 +2,10 @@ import bcrypt from 'bcryptjs'
 
 export default async (req, res, next) => {
   try {
-    const salt = await genSalt()
-    console.log(salt)
-    const hashed = await hash(req.body.password, salt)
-    console.log(hashed)
-    res.locals.password = hashed
-    console.log(hashed)
+    const salt = await bcrypt.genSalt()
+    const hash = bcrypt.hash(req.body.password, salt)
+
+    res.locals.password = hash
     next()
   } catch (error) {
     console.error(error)
