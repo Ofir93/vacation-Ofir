@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 export default async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt()
-    const hash = await bcrypt.hash(req.body.password, salt)
+    const hash = bcrypt.hash(req.body.password, salt)
 
     res.locals.password = hash
     next()
