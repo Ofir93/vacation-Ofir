@@ -1,7 +1,7 @@
 
 export default async (req, res, next) => {
-  const matchedData = ['user_name', 'password']
-  if (req.url === '/register' || req.url === '/register/') matchedData.unshift('first_name', 'last_name')
+  const matchedData = ['userName', 'password']
+  if (req.url === '/register' || req.url === '/register/') matchedData.unshift('firstName', 'lastName')
   // console.log(req.body);
   for (const key in req.body) {
     if (!matchedData.includes(key)) {
