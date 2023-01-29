@@ -19,9 +19,9 @@ export default class User {
     //   user === {"user_name": userName}
     //   return false
     // })
-    const result = users[0].filter(word => word == {"user_name": userName})
-    console.log(result);
-    if(result){
+    const result = users[0].filter(word => word.user_name === userName)
+    // console.log(result);
+    if(result.length > 0){
       return undefined
     }
     return true
