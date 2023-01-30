@@ -21,12 +21,12 @@ export default class Vacation {
   //   return await db.execute(query)
   // }
 
-  // static async find(id) {
-  //   const query = `
-  //       select * from vacations ${id ? `where id = ${id}` : ''}
-  //   `
-  //   return db.execute(query)
-  // }
+  static async find(id) {
+    const query = `
+        select * from vacations ${id ? `where id = ${id}` : ''}
+    `
+    return db.execute(query)
+  }
 
   // async update(id) {
   //   const setStatement = `

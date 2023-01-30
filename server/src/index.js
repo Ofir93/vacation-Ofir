@@ -1,12 +1,21 @@
 import express from 'express'
-import register from './routers/auth.js'
+import registerLogIn from './routers/auth.js'
+// import vacations from './routers/vacation.js'
 import dotenv from 'dotenv'
+import cors from 'cors'
 dotenv.config()
 
 const app = express()
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+)
+
 
 app.use(express.json())
-app.use('/auth', register)
+app.use('/auth', registerLogIn)
+// app.use('/vacations', vacations)
 
 
 

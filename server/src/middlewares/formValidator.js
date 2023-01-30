@@ -1,12 +1,14 @@
 import { body } from 'express-validator'
 
-// const validator = [body('email').isEmail().withMessage('Invalid email')]
-// {
-//   user_name: 'Bliz',
-//   password: '1234',
-//   first_name: 'Ofir',
-//   last_name: 'by'
-// }
+const loginValidator = [
+  body('userName').notEmpty().withMessage('User name is required'),
+  body('password')
+    .notEmpty()
+    .isLength({ min: 5 })
+    .withMessage('must be at least 5 chars long')
+]
+
+
 const registerValidator = [
   body('userName').notEmpty().withMessage('User name is required'),
   body('password')
@@ -19,4 +21,4 @@ const registerValidator = [
   body('lastName').notEmpty().withMessage('Invalid last name'),
 ]
 
-export { registerValidator }
+export { registerValidator, loginValidator }

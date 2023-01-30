@@ -27,18 +27,18 @@ export const find = async (id) => {
     return user
 }
 
-export const update = async (id, data) => {
-    const {userName, password, firstName, lastName} = data
-    if(id === undefined && userName === undefined && password === undefined && firstName === undefined && lastName === undefined) return false
+// export const update = async (id, data) => {
+//     const {userName, password, firstName, lastName} = data
+//     if(id === undefined && userName === undefined && password === undefined && firstName === undefined && lastName === undefined) return false
 
-    const user = new userModel(userName, password, firstName, lastName)
+//     const user = new userModel(userName, password, firstName, lastName)
 
-    const [res] = await user.update(id)
-    return res.affectedRows ? true : false
-}
+//     const [res] = await user.update(id)
+//     return res.affectedRows ? true : false
+// }
 
 
-export const deleteById = async (id) => {
-    const [res] = await userModel.delete(id)
-    return res.affectedRows ? true : false
-}
+// export const deleteById = async (id) => {
+//     const [res] = await userModel.delete(id)
+//     return res.affectedRows ? true : false
+// }

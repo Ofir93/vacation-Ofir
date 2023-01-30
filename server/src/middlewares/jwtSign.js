@@ -7,9 +7,9 @@ export default async (req, res, next) => {
     }
 
     // const { email } = req.body +++ role? name?
-    const { userName } = req.body
+    const { userName, role } = req.body
     jwt.sign(
-      { userName },
+      { userName, role },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '10m' }, //מתי פג תוקפו
       (err, accessToken) => {

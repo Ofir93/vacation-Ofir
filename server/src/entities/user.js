@@ -37,7 +37,7 @@ export default class User {
   async registerUser() {
     const users = await db.execute(`select id from users`)
     const highestId = users[0].length + 1
-    console.log(users[0].length)
+    // console.log(users[0].length)
     const query = `insert into users(id, first_name, last_name, user_name, password)
     value (${highestId} ,'${this.firstName}', '${this.lastName}', '${this.userName}','${this.password}')
     `
