@@ -1,44 +1,48 @@
-import userModel from '../entities/user.js'
+import vacationModel from '../entities/vacation.js'
 
 
-export const save = async (data) => {
-    try {
-        const {id, userName, password, firstName, lastName} = data
-        const user = new userModel(id, userName, password, firstName, lastName)
-        // const user = new userModel(firstName, lastName, userName, password ? points : 0)
+// export const save = async (data) => {
+//     try {
+//         const {id, desc, photo, dateStart, dateEnd, price, followers} = data
+//         const vacation = new vacationModel(id, desc, photo, dateStart, dateEnd, price, followers)
         
-        const existing = await user.exists(userName)
-        // console.log(existing);
-        if(existing === undefined || userName === "admin") {
-            console.log('User name already exists');
-          return null
-        }
+//         const existing = await vacation.exists(desc)
+//         // console.log(existing);
+//         if(existing === undefined || desc === "admin") {
+//             console.log('vacation name already exists');
+//           return null
+//         }
     
-        const [ res ] = await user.registerUser()
-        return res.affectedRows ? res.insertId = true : null
+//         const [ res ] = await vacation.registervacation()
+//         return res.affectedRows ? res.insertId = true : null
+//     } catch (error) {
+//         console.log(error)
+//         return null
+//     }
+// }
+
+export const find = async (id) => {
+    try {
+        const [vacation] = await vacationModel.find(id)
+        return vacation    
     } catch (error) {
         console.log(error)
         return null
     }
 }
 
-export const find = async (id) => {
-    const [user] = await userModel.find(id)
-    return user
-}
-
 // export const update = async (id, data) => {
-//     const {userName, password, firstName, lastName} = data
-//     if(id === undefined && userName === undefined && password === undefined && firstName === undefined && lastName === undefined) return false
+//     const {desc, photo, dateStart, dateEnd} = data
+//     if(id === undefined && desc === undefined && photo === undefined && dateStart === undefined && dateEnd === undefined) return false
 
-//     const user = new userModel(userName, password, firstName, lastName)
+//     const vacation = new vacationModel(desc, photo, dateStart, dateEnd)
 
-//     const [res] = await user.update(id)
+//     const [res] = await vacation.update(id)
 //     return res.affectedRows ? true : false
 // }
 
 
 // export const deleteById = async (id) => {
-//     const [res] = await userModel.delete(id)
+//     const [res] = await vacationModel.delete(id)
 //     return res.affectedRows ? true : false
 // }

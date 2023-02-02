@@ -1,4 +1,4 @@
-import db from '../db'
+import db from '../db.js'
 
 export default class Vacation {
   constructor(vacationId, desc, destination, photo, dateStart, dateEnd, price, folowers) {
@@ -12,14 +12,14 @@ export default class Vacation {
     this.folowers = folowers
   }
 
-  // async save() {
-  //   const query = `
-  //       insert into vacations(description, destination, photo, date_start, date_end, price, followers)
-  //       value ('${this.desc}', '${this.destination}', '${this.photo}', '${this.dateStart}', '${this.dateEnd}', ${this.price}, '${this.followers}')
-  //   `
+  async save() {
+    const query = `
+        insert into vacations(id, description, destination, photo, date_start, date_end, price, followers)
+        value ('${this.vacationId}', '${this.desc}', '${this.destination}', '${this.photo}', '${this.dateStart}', '${this.dateEnd}', ${this.price}, '${this.followers}')
+    `
 
-  //   return await db.execute(query)
-  // }
+    return await db.execute(query)
+  }
 
   static async find(id) {
     const query = `

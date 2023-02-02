@@ -10,7 +10,7 @@ import {
   MDBInput,
   MDBCheckbox,
 } from 'mdb-react-ui-kit'
-
+import Cookies from 'js-cookie'
 import axios from 'axios'
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
   }
 
   const singIn = () => {
-    //if
+    Cookies.remove('jwt')
     axios
       .post('http://localhost:4000/auth/login', {
         userName: username,
@@ -37,6 +37,24 @@ const Login = () => {
       })
       .then((response) => {
         console.log(response.data)
+        const { accessToken } = response.data
+        Cookies.set('jwt', accessToken, { expires: 0.1 })
+        // if (response.status === 200) {
+        //   setMessage('Successfully logged in')
+        //   setTimeout(() => {
+        //     setOpenLoginModal(false)
+        //     if (admin) {
+        //       setModeAdmin(true)
+        //       setModeUser(false)
+        //       setNameOfUser(userName)
+        //     }
+        //     if (!admin) {
+        //       setModeUser(true)
+        //       setModeAdmin(false)
+        //       setNameOfUser(userName)
+        //     }
+        //   }, 3000)
+        // }
       })
       .catch(function(error) {
         console.log(error)

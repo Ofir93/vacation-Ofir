@@ -1,5 +1,6 @@
 import {Router} from 'express'
-import { save, find, update, deleteById } from '../controllers/vacations.js'
+// import { save, find, update, deleteById } from '../controllers/vacations.js'
+import { find } from '../controllers/vacations.js'
 
 const router = Router()
 
@@ -27,8 +28,8 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const user = await find()
-    user.length ? res.send(user) : res.sendStatus(404)
+    const vacation = await find()
+    vacation.length ? res.send(vacation) : res.sendStatus(404)
   } catch (error) {
     console.log(error)
     res.status(500)

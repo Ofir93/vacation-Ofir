@@ -1,6 +1,6 @@
 import express from 'express'
 import registerLogIn from './routers/auth.js'
-// import vacations from './routers/vacation.js'
+import vacations from './routers/vacation.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
 dotenv.config()
@@ -15,7 +15,7 @@ app.use(
 
 app.use(express.json())
 app.use('/auth', registerLogIn)
-// app.use('/vacations', vacations)
+app.use('/vacations', vacations)
 
 
 

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-function VacationCards() {
+function VacationCards(props) {
     
-    const getVacations = () => axios.get(`http://localhost:8008/vacation/${props.teamId}/`)
+    const getVacations = () => axios.get(`http://localhost:4000/vacations${props.teamId ? `/${props.teamId}` : ''}`)
     .then((res) => {console.log(res)
         setVacationsByGroups(res.data)})
     .catch(function (error) {
@@ -14,23 +14,25 @@ function VacationCards() {
 
     useEffect(()=>{
         getVacations()
-    }, [])
+    }, [0])
   
     return (
     <div>
         <div className="card-container container">
         {vacationsByGroups.map((vacation, key) => {
-            const [date, time] = vacation.time_start.split('T')
-            const [dateNo, endTime] = vacation.time_end.split('T')
+            // const [date, time] = vacation.time_start.split('T')
+            // const [dateNo, endTime] = vacation.time_end.split('T')
             return (
                 <div className="card" key={key}>
                     <div className="card-body">
-                    <h3 className="card-title">Destination: {vacation.meet_room}</h3>
-                    <p className='card-text'>From Date {date}</p>
-                    <p className='card-text'>To Date {time.replace(/^Z+/, '').replace(/Z+$/, '')}</p>
-                    <p className='card-text'>{endTime.replace(/^Z+/, '').replace(/Z+$/, '')}</p>
-                    <p className='card-text'>Description: {vacation.meet_desc}</p>
-                    <p className='card-text'>Price {vacation.meet_desc}</p>
+                    <h3 className="card-title">Destination{vacation.id}: {vacation.destination}</h3>
+                    <p className='card-text'>From Date {vacation.date_start}</p>
+                    <p className='card-text'>To Date {vacation.date_end}</p>
+                    <img className='card-img-top' src={vacation.photo} alt="vacation image"></img>
+                    <p className='card-text'>Price: {vacation.price}$</p>
+                    <p className='card-text'>Description: {vacation.description}</p>
+                    <p className='card-text'>Followers {vacation.followers}</p>
+                    <button class="btn btn-primary"><i class="bi bi-star"></i>Follow</button>
                     </div>
                 </div>
             )
