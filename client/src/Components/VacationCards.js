@@ -32,7 +32,7 @@ function VacationCards(props) {
                     <p className='card-text'>Price: {vacation.price}$</p>
                     <p className='card-text'>Description: {vacation.description}</p>
                     <p className='card-text'>Followers {vacation.followers}</p>
-                    <button class="btn btn-primary"><i class="bi bi-star"></i>Follow</button>
+                    <button className="btn btn-primary"><i className="bi bi-star"></i>Follow</button>
                     </div>
                 </div>
             )

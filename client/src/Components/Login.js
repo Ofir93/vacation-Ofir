@@ -12,8 +12,9 @@ import {
 } from 'mdb-react-ui-kit'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
-const Login = () => {
+const Login = ({setUserName}) => {
   const [justifyActive, setJustifyActive] = useState('tab1')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -36,9 +37,11 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
-        console.log(response.data)
         const { accessToken } = response.data
         Cookies.set('jwt', accessToken, { expires: 0.1 })
+        setUserName(jwt.decode(accessToken))
+        //{userName: 'admin', role: 'admin', iat: 1675598466, exp: 1675599066}
+
         // if (response.status === 200) {
         //   setMessage('Successfully logged in')
         //   setTimeout(() => {

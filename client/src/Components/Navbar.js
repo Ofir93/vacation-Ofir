@@ -1,25 +1,35 @@
 import React, { useState } from 'react'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 
-const NavbarTop = ({showLogin, showHome}) => {
-    // const [logIn, setLogIn] = useState(false)
-
-    
+const NavbarTop = ({ interfacesChange, userName }) => {
+  // const [logIn, setLogIn] = useState(false)
 
   return (
-    <div id='navbarC'>
-        <Navbar bg="success" expand="lg">
-    <Container>
-      <Navbar.Brand href="#home">Tripping :)</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="#" onClick={()=> showHome(true)}>Home</Nav.Link>
-          <Nav.Link href="#" onClick={()=> showLogin(true)}>Login</Nav.Link>
-          {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+    <div id="navbarC">
+      <Navbar bg="success" expand="lg">
+        <Container>
+          <Navbar.Brand href="#home">Tripping :) {userName.userName}</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link
+                href="#"
+                onClick={() => {interfacesChange(false, false, true)
+                console.log(userName)}
+                }
+              >
+                Home
+              </Nav.Link>
+              <Nav.Link
+                href="#"
+                onClick={() => interfacesChange(false, true, false)}
+              >
+                Login
+              </Nav.Link>
+              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">
               Another action
@@ -30,11 +40,11 @@ const NavbarTop = ({showLogin, showHome}) => {
               Separated link
             </NavDropdown.Item>
           </NavDropdown> */}
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-</div>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
   )
 }
 
