@@ -47,7 +47,7 @@ router.post(
       req.body.password = res.locals.password
       const insertId = await save(req.body)
       insertId
-        ? res.send({ accessToken: res.locals.accessToken})
+        ? res.json({ accessToken: res.locals.accessToken})
         : res.send(`Nothing inserted User name already exists`)
   
       // res.send({ accessToken: res.locals.accessToken, response: `User ${insertId} inserted!`})

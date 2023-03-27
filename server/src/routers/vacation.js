@@ -1,20 +1,18 @@
 import {Router} from 'express'
 // import { save, find, update, deleteById } from '../controllers/vacations.js'
-import { find } from '../controllers/vacations.js'
+import { save, find, deleteById } from '../controllers/vacations.js'
 
 const router = Router()
 
-// router.post('/', async (req, res) => {
-//   try {
-//     const insertId = await save(req.body)
-//     insertId
-//       ? res.send(`User ${insertId} inserted!`)
-//       : res.send('Nothing inserted')
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500)
-//   }
-// })
+router.post('/', async (req, res) => {
+  try {
+    const insert = await save(req.body)
+    res.send(insert)
+  } catch (error) {
+    console.log(error)
+    res.status(500)
+  }
+})
 
 // router.get('/:id', async (req, res) => {
 //   try {
@@ -49,15 +47,15 @@ router.get('/', async (req, res) => {
 // })
 
 
-// router.delete('/:id', async (req, res) => {
-//     try {
-//       const isDeleted = await deleteById(req.params.id)
-//       isDeleted
-//         ? res.send(`User ${req.params.id} deleted!`)
-//         : res.send('Nothing deleted')
-//     } catch (error) {
-//       console.log(error)
-//       res.status(500)
-//     }
-//   })
+router.delete('/:id', async (req, res) => {
+    try {
+      const isDeleted = await deleteById(req.params.id)
+      isDeleted
+        ? res.send(`User ${req.params.id} deleted!`)
+        : res.send('Nothing deleted')
+    } catch (error) {
+      console.log(error)
+      res.status(500)
+    }
+  })
 export default router

@@ -10,16 +10,21 @@ import {
   MDBInput,
   MDBCheckbox,
 } from 'mdb-react-ui-kit'
-import Cookies from 'js-cookie'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+import { useHomeUpdate } from '../Contexts/InterfacesContext'
+import { useUserUpdate } from '../Contexts/userProvider'
 
-const Login = ({setUserName}) => {
+
+const Login = () => {
   const [justifyActive, setJustifyActive] = useState('tab1')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+
+  const interfacesChange = useHomeUpdate()
+  const userChangeChange = useUserUpdate()
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -28,9 +33,14 @@ const Login = ({setUserName}) => {
 
     setJustifyActive(value)
   }
+  let agree = false
+  const handleAgree = (e) => {
+    const { checked } = e.target
+    agree = checked
+  }
 
-  const singIn = () => {
-    Cookies.remove('jwt')
+  const signIn = () => {
+    window.localStorage.removeItem('jwt')
     axios
       .post('http://localhost:4000/auth/login', {
         userName: username,
@@ -38,33 +48,20 @@ const Login = ({setUserName}) => {
       })
       .then((response) => {
         const { accessToken } = response.data
-        Cookies.set('jwt', accessToken, { expires: 0.1 })
-        setUserName(jwt.decode(accessToken))
-        //{userName: 'admin', role: 'admin', iat: 1675598466, exp: 1675599066}
-
-        // if (response.status === 200) {
-        //   setMessage('Successfully logged in')
-        //   setTimeout(() => {
-        //     setOpenLoginModal(false)
-        //     if (admin) {
-        //       setModeAdmin(true)
-        //       setModeUser(false)
-        //       setNameOfUser(userName)
-        //     }
-        //     if (!admin) {
-        //       setModeUser(true)
-        //       setModeAdmin(false)
-        //       setNameOfUser(userName)
-        //     }
-        //   }, 3000)
-        // }
+        window.localStorage.setItem('jwt', accessToken)
+        const { role } = jwt.decode(accessToken)
+        userChangeChange(username, role, accessToken)
+        interfacesChange(false, false, true)
       })
       .catch(function(error) {
-        console.log(error)
+        alert(error.response.data)
       })
   }
 
   const singUp = () => {
+    if(!agree){
+      return alert('Please agree to the terms before registering.')
+    }
     //if
     axios
       .post('http://localhost:4000/auth/register', {
@@ -75,6 +72,15 @@ const Login = ({setUserName}) => {
       })
       .then((response) => {
         console.log(response.data)
+        if(response.data === 'Nothing inserted User name already exists'){
+          return alert('User name already exists please try again')
+        }
+        const { accessToken } = response.data
+        window.localStorage.setItem('jwt', accessToken)
+        const { role } = jwt.decode(accessToken)
+        userChangeChange(username, role, accessToken)
+        interfacesChange(false, false, true)
+
       })
       .catch(function(error) {
         console.log(error)
@@ -134,16 +140,19 @@ const Login = ({setUserName}) => {
               <MDBCheckbox
                 name="flexCheck"
                 wrapperClass="text-white"
-                value=""
+                checked
+                readOnly
                 id="flexCheckDefault"
-                label="Remember me"
+                label="Remember me :)"
               />
-              <a href="!#">Forgot password?</a>
+              <a href="!#"
+              // onClick={}///////////////////////////////////////////////////////////////////////////////////////
+              >Forgot password?</a>
             </div>
 
             <MDBBtn
               className="mb-4 w-100"
-              onClick={() => singIn()}
+              onClick={() => signIn()}
             >
               Sign in
             </MDBBtn>
@@ -196,10 +205,14 @@ const Login = ({setUserName}) => {
                 name="flexCheck"
                 id="flexCheckDefault"
                 label="I have read and agree to the terms"
+                onChange={handleAgree}
               />
             </div>
 
-            <MDBBtn className="mb-4 w-100">Sign up</MDBBtn>
+            <MDBBtn 
+            className="mb-4 w-100"
+            onClick={() => singUp()}
+            >Sign up</MDBBtn>
           </MDBTabsPane>
         </MDBTabsContent>
       </MDBContainer>

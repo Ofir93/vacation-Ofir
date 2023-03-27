@@ -14,32 +14,23 @@ export function useHomeUpdate() {
 
 
 export function InterfacesContext({ children }) {
-  // const [logIn, setLogIn] = useState(false)
   const [interfaces, setInterface] = useState({
     home: true,
     logIn: false,
     vacations: false,
+    adminAddVac:false,
+    adminReports: false
   })
-  // const [vacations, setVacations] = useState(false)
 
-  const toggleInterface = (home, logIn, vacations) => {
+  const toggleInterface = (home, logIn, vacations, adminAddVac, adminReports) => {
     setInterface({
         home: home,
         logIn: logIn,
         vacations: vacations,
+        adminAddVac: adminAddVac,
+        adminReports: adminReports
       })
 }
-//   const showHome = () => {
-//     setLogIn(false)
-//     setHome(true)
-//     setVacations(false)
-//   }
-
-//   const showVacations = () => {
-//     setLogIn(false)
-//     setHome(false)
-//     setVacations(true)
-//   }
 
   return (
     <InterfaceContext.Provider value={interfaces}>
@@ -50,4 +41,3 @@ export function InterfacesContext({ children }) {
   )
 }
 
-// export default InterfacesContext

@@ -18,7 +18,7 @@
   /* } */
 
   #loginContainer {
-    background: url("./lib/pcyWoman.jpg") no-repeat center ; 
+    background: url("./lib/pcyWoman.jpg")  center; 
     border: solid 2px black;
   }
 
@@ -36,8 +36,9 @@
     justify-content: center;
   }
   .card{
-    width: 20rem;
+    width: 17rem;
     margin-right: 1rem;
+    margin-top: 0.5rem;
   }
 
   .greet {
@@ -62,6 +63,8 @@
   .greet h2 {
     padding-top: 3px;
   }
+
+  
   
  /*
    .btn {

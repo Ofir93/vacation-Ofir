@@ -11,7 +11,7 @@ export default async (req, res, next) => {
     jwt.sign(
       { userName, role },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10m' }, //מתי פג תוקפו
+      { expiresIn: '10m' }, 
       (err, accessToken) => {
         if (err) {
           console.error(err)

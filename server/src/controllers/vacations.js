@@ -1,25 +1,26 @@
 import vacationModel from '../entities/vacation.js'
 
 
-// export const save = async (data) => {
-//     try {
-//         const {id, desc, photo, dateStart, dateEnd, price, followers} = data
-//         const vacation = new vacationModel(id, desc, photo, dateStart, dateEnd, price, followers)
-        
-//         const existing = await vacation.exists(desc)
-//         // console.log(existing);
-//         if(existing === undefined || desc === "admin") {
-//             console.log('vacation name already exists');
-//           return null
-//         }
+export const save = async (data) => {
+    try {
+        const {id, desc, destination, photo, dateStart, dateEnd, price, followers} = data
     
-//         const [ res ] = await vacation.registervacation()
-//         return res.affectedRows ? res.insertId = true : null
-//     } catch (error) {
-//         console.log(error)
-//         return null
-//     }
-// }
+        const vacation = new vacationModel(id, desc, destination, photo, dateStart, dateEnd, price, followers)
+        
+        const existing = await vacation.exists(desc)
+        console.log(existing);
+        if(existing === undefined) {
+            console.log('vacation name already exists');
+          return 'vacation name already exists'
+        }
+        const [ res ] = await vacation.save()
+        return res.affectedRows ? 'Inserted successfully' : 'Nothing inserted'
+    } catch (error) {
+        console.log(error.sqlMessage)
+        return 'Nothing inserted'
+    }
+}
+
 
 export const find = async (id) => {
     try {
@@ -42,7 +43,7 @@ export const find = async (id) => {
 // }
 
 
-// export const deleteById = async (id) => {
-//     const [res] = await vacationModel.delete(id)
-//     return res.affectedRows ? true : false
-// }
+export const deleteById = async (id) => {
+    const [res] = await vacationModel.delete(id)
+    return res.affectedRows ? true : false
+}

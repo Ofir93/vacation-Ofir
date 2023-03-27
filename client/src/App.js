@@ -1,14 +1,16 @@
 import React from 'react'
 import MainInterface from './Components/MainInterface'
-import { InterfacesContext } from './Contexts/InterfacesContext.js'
-
+import { InterfacesContext } from './Contexts/InterfacesContext'
+import { UsersContext } from './Contexts/userProvider'
 
 function App() {
   return (
     <main>
-      <InterfacesContext>
-      <MainInterface/>
-      </InterfacesContext>
+      <UsersContext>
+        <InterfacesContext>
+          <MainInterface />
+        </InterfacesContext>
+      </UsersContext>
     </main>
   )
 }
