@@ -1,6 +1,7 @@
 import express from 'express'
 import registerLogIn from './routers/auth.js'
 import vacations from './routers/vacation.js'
+import follow from './routers/follow.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(
 app.use(express.json())
 app.use('/auth', registerLogIn)
 app.use('/vacations', vacations)
+app.use('/follow', follow)
 
 
 

@@ -15,7 +15,6 @@ import jwt from 'jsonwebtoken'
 import { useHomeUpdate } from '../Contexts/InterfacesContext'
 import { useUserUpdate } from '../Contexts/userProvider'
 
-
 const Login = () => {
   const [justifyActive, setJustifyActive] = useState('tab1')
   const [username, setUsername] = useState('')
@@ -49,17 +48,17 @@ const Login = () => {
       .then((response) => {
         const { accessToken } = response.data
         window.localStorage.setItem('jwt', accessToken)
-        const { role } = jwt.decode(accessToken)
-        userChangeChange(username, role, accessToken)
+        const { role, id } = jwt.decode(accessToken)
+        userChangeChange(username, role, accessToken, id)
         interfacesChange(false, false, true)
       })
-      .catch(function(error) {
+      .catch(function (error) {
         alert(error.response.data)
       })
   }
 
   const singUp = () => {
-    if(!agree){
+    if (!agree) {
       return alert('Please agree to the terms before registering.')
     }
     //if
@@ -68,25 +67,23 @@ const Login = () => {
         userName: username,
         password: password,
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
       })
       .then((response) => {
         console.log(response.data)
-        if(response.data === 'Nothing inserted User name already exists'){
+        if (response.data === 'Nothing inserted User name already exists') {
           return alert('User name already exists please try again')
         }
         const { accessToken } = response.data
         window.localStorage.setItem('jwt', accessToken)
-        const { role } = jwt.decode(accessToken)
-        userChangeChange(username, role, accessToken)
+        const { role, id } = jwt.decode(accessToken)
+        userChangeChange(username, role, accessToken, id)
         interfacesChange(false, false, true)
-
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error)
       })
   }
-
 
   return (
     <div id="loginC">
@@ -145,9 +142,12 @@ const Login = () => {
                 id="flexCheckDefault"
                 label="Remember me :)"
               />
-              <a href="!#"
-              // onClick={}///////////////////////////////////////////////////////////////////////////////////////
-              >Forgot password?</a>
+              <a
+                href="!#"
+                // onClick={}///////////////////////////////////////////////////////////////////////////////////////
+              >
+                Forgot password?
+              </a>
             </div>
 
             <MDBBtn
@@ -209,10 +209,9 @@ const Login = () => {
               />
             </div>
 
-            <MDBBtn 
-            className="mb-4 w-100"
-            onClick={() => singUp()}
-            >Sign up</MDBBtn>
+            <MDBBtn className="mb-4 w-100" onClick={() => singUp()}>
+              Sign up
+            </MDBBtn>
           </MDBTabsPane>
         </MDBTabsContent>
       </MDBContainer>

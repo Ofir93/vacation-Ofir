@@ -1,6 +1,5 @@
 import {Router} from 'express'
-// import { save, find, update, deleteById } from '../controllers/vacations.js'
-import { save, find, deleteById, update } from '../controllers/vacations.js'
+import { save, find, deleteById } from '../controllers/follows.js'
 
 const router = Router()
 
@@ -24,27 +23,27 @@ router.post('/', async (req, res) => {
 //   }
 // })
 
-router.get('/', async (req, res) => {
+router.get('/:userId&:vacId', async (req, res) => {
   try {
-    const vacation = await find()
-    vacation.length ? res.send(vacation) : res.sendStatus(404)
+    const follow = await find(req.params.userId, req.params.vacId)
+    follow.length ? res.send(follow) : res.sendStatus(404)
   } catch (error) {
     console.log(error)
     res.status(500)
   }
 })
 
-router.patch('/:id', async (req, res) => {
-  try {
-    const isUpdated = await update(req.params.id, req.body)
-    isUpdated
-      ? res.send(`Vacation ${req.params.id} updated!`)
-      : res.send('Nothing updated')
-  } catch (error) {
-    console.log(error)
-    res.status(500).send('Nothing updated')
-  }
-})
+// router.patch('/:id', async (req, res) => {
+//   try {
+//     const isUpdated = await update(req.params.id, req.body)
+//     isUpdated
+//       ? res.send(`Vacation ${req.params.id} updated!`)
+//       : res.send('Nothing updated')
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).send('Nothing updated')
+//   }
+// })
 
 
 router.delete('/:id', async (req, res) => {

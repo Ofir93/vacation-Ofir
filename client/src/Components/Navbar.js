@@ -22,7 +22,7 @@ const NavbarTop = ({ interfacesChange }) => {
     <div id="navbarC">
       <Navbar bg="success" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             Tripping :) {user.userName ? `Hello ${user.userName}` : ''}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

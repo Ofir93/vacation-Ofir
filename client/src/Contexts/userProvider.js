@@ -18,13 +18,15 @@ export function UsersContext({ children }) {
     userName: '',
     role: '',
     jwt: '',
+    id: '',
   })
 
-  const updateUser = (userName, role, jwt) => {
+  const updateUser = (userName, role, jwt, id) => {
     setUser({
         userName: userName,
         role: role,
         jwt: jwt,
+        id: id,
       })
 }
 

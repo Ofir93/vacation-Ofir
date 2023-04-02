@@ -50,7 +50,8 @@ export default async (req, res, next) => {
         return res.sendStatus(401)
       }
       // else{console.log('ps ok');}
-      req.body.role = "user"
+      req.body.role = "user" 
+      req.body.id = userExisted[0].id
     }
 if(!userExisted.length && !adminExisted.length){
   // console.log(userExisted, adminExisted);

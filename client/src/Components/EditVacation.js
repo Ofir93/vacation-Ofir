@@ -1,11 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useHomeUpdate } from '../Contexts/InterfacesContext'
 // import { useUser } from '../Contexts/userProvider'
 
-function AddVacation() {
+function EditVacation({ vacation, setEdit }) {
   //   const user = useUser()
-  const interfacesChange = useHomeUpdate()
 
   const [destination, setDestination] = useState('')
   const [description, setDescription] = useState('')
@@ -29,21 +27,12 @@ function AddVacation() {
     return true
   }
 
-  const addVacations = () => {
-    // if(!destination || !description || !fromDate || !toDate || !price || !image){
-    //     alert('Please fill all fields')
-    //     return
-    // }
+  const editVacations = () => {
     if (!TDate()) {
       return
     }
-    // axios
-    //   .get(`http://localhost:4000/vacations`)
-    //   .then((res) => {
-    //     const id = ++res.data.length
         axios
-          .post(`http://localhost:4000/vacations`, {
-            // id: id,
+          .patch(`http://localhost:4000/vacations/${vacation.id}`, {
             destination: destination,
             desc: description,
             photo: image,
@@ -53,31 +42,27 @@ function AddVacation() {
           })
           .then((res) => {
             alert(res.data)
-            console.log(res)
             if (
-              res.data === 'vacation name already exists' ||
               res.data === 'Nothing inserted'
             ) {
               return
             }
-            interfacesChange(false, false, true)
+            setEdit({ edit: false, id: undefined })
           })
           .catch(function (error) {
+            alert(error.message)
             console.log(error)
+            setEdit({ edit: false, id: undefined })
           })
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
+   
   }
 
   return (
     <div>
-      <div className="card-container container add">
-        <div className="card">
+        <div className="edit">
           <div className="card-body">
             <form>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="destination" className="form-label">
                   Destination
                 </label>
@@ -86,13 +71,14 @@ function AddVacation() {
                   className="form-control"
                   id="destination"
                   aria-describedby="destination"
+                  placeholder={vacation.destination}
                   onChange={(e) => setDestination(e.target.value)}
                 ></input>
                 {/* <div id="emailHelp" className="form-text">
                       We'll never share your email with anyone else.
                     </div> */}
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="description" className="form-label">
                   Description
                 </label>
@@ -100,32 +86,43 @@ function AddVacation() {
                   type="text"
                   className="form-control"
                   id="description"
+                  placeholder={vacation.description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></input>
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="fromDate" className="form-label">
                   From Date
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   className="form-control"
                   id="fromDate"
+                  onFocus={(e) => (e.target.type = 'date')}
+                  onBlur={(e) => (e.target.type = 'text')}
+                  placeholder={new Date(vacation.date_start)
+                    .toJSON()
+                    .slice(0, 10)}
                   onChange={(e) => setFromDate(e.target.value)}
                 ></input>
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="toDate" className="form-label">
                   To Date
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   className="form-control"
                   id="toDate"
+                  onFocus={(e) => (e.target.type = 'date')}
+                  onBlur={(e) => (e.target.type = 'text')}
+                  placeholder={new Date(vacation.date_end)
+                    .toJSON()
+                    .slice(0, 10)}
                   onChange={(e) => setToDate(e.target.value)}
                 ></input>
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="price" className="form-label">
                   Price $
                 </label>
@@ -133,10 +130,11 @@ function AddVacation() {
                   type="number"
                   className="form-control"
                   id="price"
+                  placeholder={vacation.price}
                   onChange={(e) => setPrice(e.target.value)}
                 ></input>
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="image" className="form-label">
                   Image URL
                 </label>
@@ -144,10 +142,11 @@ function AddVacation() {
                   type="url"
                   className="form-control"
                   id="image"
+                  placeholder={vacation.photo}
                   onChange={(e) => setImage(e.target.value)}
                 ></input>
               </div>
-              <div className="mb-3 form-check">
+              <div className="mb-1 form-check">
                 <input
                   type="checkbox"
                   className="form-check-input"
@@ -162,7 +161,9 @@ function AddVacation() {
                 type="button"
                 className="btn btn-primary"
                 onClick={() =>
-                  check ? addVacations() : alert('Please confirm your new trip')
+                  check
+                    ? editVacations() 
+                    : alert('Please confirm your new trip')
                 }
               >
                 Submit
@@ -170,9 +171,8 @@ function AddVacation() {
             </form>
           </div>
         </div>
-      </div>
     </div>
   )
 }
 
-export default AddVacation
+export default EditVacation

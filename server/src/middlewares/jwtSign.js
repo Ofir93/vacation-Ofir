@@ -7,11 +7,11 @@ export default async (req, res, next) => {
     }
 
     // const { email } = req.body +++ role? name?
-    const { userName, role } = req.body
+    const { userName, role, id } = req.body
     jwt.sign(
-      { userName, role },
+      { userName, role, id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10m' }, 
+      { expiresIn: '20m' }, 
       (err, accessToken) => {
         if (err) {
           console.error(err)
