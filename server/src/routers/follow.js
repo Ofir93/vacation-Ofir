@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:userId&:vacId', async (req, res) => {
   try {
+    console.log(req.params.userId, req.params.vacId);
     const follow = await find(req.params.userId, req.params.vacId)
     follow.length ? res.send(follow) : res.sendStatus(404)
   } catch (error) {
@@ -46,9 +47,9 @@ router.get('/:userId&:vacId', async (req, res) => {
 // })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id&vac', async (req, res) => {
     try {
-      const isDeleted = await deleteById(req.params.id)
+      const isDeleted = await deleteById(req.params.id, req.params.vac)
       isDeleted
         ? res.send(`Vacation ${req.params.id} deleted!`)
         : res.send('Nothing deleted')

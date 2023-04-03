@@ -14,10 +14,9 @@ export default class Follow {
 
   static async find(userId, vacId) {
     const query = `
-    select * from likes where ${
-        userId ? `user = ${userId}` : `vacation = ${vacId}`
-    } 
-`
+    select * from likes where user = ${userId} and vacation = ${vacId}`
+    
+
     return db.execute(query)
   }
 

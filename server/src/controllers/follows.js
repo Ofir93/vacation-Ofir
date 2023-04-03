@@ -3,9 +3,9 @@ import followModel from '../entities/follow.js'
 
 export const save = async (data) => {
     try {
-        const {userId, VacId} = data
-        const follow = new followModel(userId, VacId)
-        const [ res ] = await follow.registerUser()
+        const {userId, vacId} = data
+        const follow = new followModel(userId, vacId)
+        const [ res ] = await follow.addFollow()
         return res.affectedRows ? res.insertId = true : null
     } catch (error) {
         console.log(error)
@@ -13,12 +13,10 @@ export const save = async (data) => {
     }
 }
 
-export const find = async (userName, vacId) => {
+export const find = async (userId, vacId) => {
     try {
 
-        const [userId] = await followModel.userNameToId(userName)
-
-        const [follow] = await followModel.find(userId[0].id, vacId)
+        const [follow] = await followModel.find(userId, vacId)
 
         return follow
     
@@ -26,6 +24,17 @@ export const find = async (userName, vacId) => {
         console.log(error);
     }
 }
+
+// export const update = async (id, data) => {
+//     const {user} = data
+//     if(id === undefined && desc === undefined && destination === undefined && photo === undefined && dateStart === undefined && dateEnd === undefined && price === undefined) return false
+
+//     const vacation = new vacationModel(desc, destination, photo, dateStart, dateEnd, price, followers)
+
+//     const [res] = await vacation.update(id)
+//     return res.affectedRows ? true : false
+// }
+
 
 
 export const deleteById = async (userId, vacId) => {
