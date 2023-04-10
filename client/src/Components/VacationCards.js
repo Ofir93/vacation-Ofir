@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../Contexts/userProvider'
 import EditVacation from './EditVacation'
 import Follow from './Follow'
+import checkUserUtil from '../utils/checkUser.js'
 
 function VacationCards() {
   const user = useUser()
@@ -12,6 +13,7 @@ function VacationCards() {
   const [edit, setEdit] = useState({ edit: false, id: undefined })
 
   const getVacations = () =>
+    
     axios
       .get(`http://localhost:4000/vacations`)
       .then((res) => {
@@ -119,16 +121,12 @@ function VacationCards() {
                     Description: {vacation.description}
                     {user.id}
                   </p>
-                  <p className="card-text">Followers {vacation.followers}</p>
                   {user.role !== 'admin' ? (
                     <div>
-                      <button className="btn btn-primary">
-                        <i className="bi bi-star"></i>Follow
-                      </button>
                       <Follow vacation={vacation}></Follow>
                     </div>
                   ) : (
-                    ''
+                    <p className="card-text">Followers {vacation.followers}</p>
                   )}
                 </div>
               )}

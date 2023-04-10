@@ -13,13 +13,13 @@ function Follow({ vacation }) {
     <button
       className="btn btn-primary"
       onClick={(e) => {
+        console.log(userId, vacId);
         removeFollow(userId, vacId)
-        setPressed(false)
         //הבעיה היא שברגע הריפרוש התוכן נמחק.
         //צריך כל פעם לקחת מהJWT
       }}
     >
-      <i className="bi bi-star-fill"></i>UnFollow
+      UnFollow <i className="bi bi-star-fill"></i>
     </button>
   )
 
@@ -29,24 +29,21 @@ function Follow({ vacation }) {
       onClick={(e) => {
         console.log(userId, vacId)
         addFollow(userId, vacId)
-        setPressed(true)
       }}
     >
-      <i className="bi bi-star"></i>Follow
+      Follow <i className="bi bi-star"></i>
     </button>
   )
 
   const addFollow = (userId, VacId) => {
-    if (vacation.followers) {
-      return alert('error')
-      ///////////////////////////////////
-    }
     axios.post(`http://localhost:4000/follow/`, {
         userId: userId,
         vacId: VacId
     })
     .then((res) => {
         console.log(res.data);
+        vacation.followers++
+        setPressed(true)
     })
     .catch((error) => {
         console.log(error)
@@ -58,9 +55,15 @@ function Follow({ vacation }) {
       return alert('error')
       ///////////////////////////////////
     }
-    axios.delete(`http://localhost:4000/follow/${userId}&${vacId}`)
+    const deleteFollow = {
+        userId: userId,
+        vacId: vacId
+    }
+    axios.post(`http://localhost:4000/follow/delFol`, deleteFollow)
     .then((res) => {
         console.log(res.data);
+        vacation.followers--
+        setPressed(false)
     })
     .catch((error) => {
         console.log(error)
@@ -73,12 +76,17 @@ function Follow({ vacation }) {
     axios
       .get(`http://localhost:4000/follow/${userId}&${vacId}`)
       .then((res) => {
-        console.log(res.data);
+        if(res.data === 404){
+            setPressed(false) 
+            return
+        } 
+        // console.log(res.data);
+        setPressed(true)
         // setUserId(user.id)
         // setVacId(vacation.id)
       })
       .catch(function (error) {
-        console.log(error)
+        console.log(error);
       })
   }
   useEffect(() => {

@@ -4,10 +4,12 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { useUser, useUserUpdate } from '../Contexts/userProvider'
+import { useHomeUpdate } from '../Contexts/InterfacesContext'
 
-const NavbarTop = ({ interfacesChange }) => {
+const NavbarTop = () => {
   const user = useUser()
   const userModelChange = useUserUpdate()
+  const interfacesChange = useHomeUpdate()
 
   const logOut = ( )=> {
     userModelChange('','','')

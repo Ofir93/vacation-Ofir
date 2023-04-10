@@ -1,11 +1,12 @@
 import {Router} from 'express'
-import { save, find, deleteById } from '../controllers/follows.js'
+import { save, find, deleteById, updateFollow, removeFollow } from '../controllers/follows.js'
 
 const router = Router()
 
 router.post('/', async (req, res) => {
   try {
     const insert = await save(req.body)
+    await updateFollow()
     res.send(insert)
   } catch (error) {
     console.log(error)
@@ -25,9 +26,10 @@ router.post('/', async (req, res) => {
 
 router.get('/:userId&:vacId', async (req, res) => {
   try {
-    console.log(req.params.userId, req.params.vacId);
+    // console.log(req.params.userId, req.params.vacId);
     const follow = await find(req.params.userId, req.params.vacId)
-    follow.length ? res.send(follow) : res.sendStatus(404)
+    // console.log(follow);
+    follow.length ? res.send(follow) : res.send("404")
   } catch (error) {
     console.log(error)
     res.status(500)
@@ -47,17 +49,44 @@ router.get('/:userId&:vacId', async (req, res) => {
 // })
 
 
-router.delete('/:id&vac', async (req, res) => {
+router.post('/delFol', async (req, res) => {
     try {
-      const isDeleted = await deleteById(req.params.id, req.params.vac)
-      isDeleted
-        ? res.send(`Vacation ${req.params.id} deleted!`)
-        : res.send('Nothing deleted')
+    //   const insert = await save(req.body)
+    //   await updateFollow()
+    //   res.send(insert)
+    // const [userId, vacId] = req.body
+    // console.log(req.body.userId, req.body.vacId);
+      const isDeleted = await deleteById(req.body.userId, req.body.vacId)
+      if (isDeleted) {
+        await removeFollow(req.body.vacId)
+        res.send(`Vacation ${req.body.vacId} deleted!`)
+        return
+      }
+      res.send('Nothing deleted')
+
     } catch (error) {
       console.log(error)
       res.status(500)
     }
   })
+  
+
+// router.delete('/:deleteFollow', async (req, res) => {
+//     try {
+//         const [userId] = req.params.deleteFollow
+//         console.log(userId);
+//       const isDeleted = await deleteById(req.params.deleteFollow.userId, req.params.deleteFollow.vacId)
+//       if (isDeleted) {
+//         await updateFollow()
+//         res.send(`Vacation ${req.params.id} deleted!`)
+//         return
+//       }
+//       res.send('Nothing deleted')
+//       } catch (error) {
+//       console.log(error)
+//       res.status(500)
+//     }
+//   })
 
   
 export default router

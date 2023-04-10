@@ -13,6 +13,24 @@ export const save = async (data) => {
     }
 }
 
+export const updateFollow = async () => {
+    try {
+        const hasUpdated = await followModel.updateFollow()
+        return hasUpdated.affectedRows ? hasUpdated.insertId = true : null      
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const removeFollow = async (vacId) => {
+    try {
+        const hasUpdated = await followModel.removeFollow(vacId)
+        return hasUpdated.affectedRows ? hasUpdated.insertId = true : null      
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const find = async (userId, vacId) => {
     try {
 

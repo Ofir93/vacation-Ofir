@@ -1,6 +1,9 @@
 import React from 'react'
+import { useHomeUpdate } from '../Contexts/InterfacesContext'
 
-function Greeting({ interfacesChange }) {
+function Greeting() {
+    const interfacesChange = useHomeUpdate()
+
   return (
     <div>
         <div className="greet">

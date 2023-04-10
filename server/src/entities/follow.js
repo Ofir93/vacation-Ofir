@@ -6,16 +6,26 @@ export default class Follow {
     this.vacId = vacId
   }
 
- static async userNameToId(userName){
-    const query = `
-    select id from users where user_name = '${userName}'`
+ static async updateFollow() {
+    const query = `UPDATE tripping.vacations AS v1,
+    (SELECT vacation, COUNT(vacation) AS v2
+    FROM likes
+    GROUP BY vacation) v3
+    SET v1.followers = v3.v2
+    WHERE v1.id = v3.vacation;`
+    return db.execute(query)
+  }
+
+  static async removeFollow(vacId){
+    const query = `UPDATE tripping.vacations 
+    SET followers = followers - 1 
+    WHERE id = ${vacId};`
     return db.execute(query)
   }
 
   static async find(userId, vacId) {
     const query = `
     select * from likes where user = ${userId} and vacation = ${vacId}`
-    
 
     return db.execute(query)
   }
@@ -27,7 +37,6 @@ export default class Follow {
     return db.execute(query)
   }
 
-
   static async delete(userId, vacId) {
     const query = `
     delete from likes
@@ -36,4 +45,4 @@ export default class Follow {
 
     return await db.execute(query)
   }
-} 
+}
