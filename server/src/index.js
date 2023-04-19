@@ -13,13 +13,10 @@ app.use(
   })
 )
 
-
 app.use(express.json())
 app.use('/auth', registerLogIn)
 app.use('/vacations', vacations)
 app.use('/follow', follow)
-
-
 
 app.use((req, res) => {
   try {

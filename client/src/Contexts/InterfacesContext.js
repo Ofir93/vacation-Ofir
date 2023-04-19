@@ -4,33 +4,37 @@ const InterfaceContext = React.createContext()
 const InterfaceUpdateContext = React.createContext()
 
 export function useHome() {
-    return useContext(InterfaceContext)
+  return useContext(InterfaceContext)
 }
 
 export function useHomeUpdate() {
-    return useContext(InterfaceUpdateContext)
+  return useContext(InterfaceUpdateContext)
 }
-
-
 
 export function InterfacesContext({ children }) {
   const [interfaces, setInterface] = useState({
     home: true,
     logIn: false,
     vacations: false,
-    adminAddVac:false,
-    adminReports: false
+    adminAddVac: false,
+    adminReports: false,
   })
 
-  const toggleInterface = (home, logIn, vacations, adminAddVac, adminReports) => {
+  const toggleInterface = (
+    home,
+    logIn,
+    vacations,
+    adminAddVac,
+    adminReports
+  ) => {
     setInterface({
-        home: home,
-        logIn: logIn,
-        vacations: vacations,
-        adminAddVac: adminAddVac,
-        adminReports: adminReports
-      })
-}
+      home: home,
+      logIn: logIn,
+      vacations: vacations,
+      adminAddVac: adminAddVac,
+      adminReports: adminReports,
+    })
+  }
 
   return (
     <InterfaceContext.Provider value={interfaces}>
@@ -40,4 +44,3 @@ export function InterfacesContext({ children }) {
     </InterfaceContext.Provider>
   )
 }
-

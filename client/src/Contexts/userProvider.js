@@ -4,14 +4,12 @@ const UserContext = React.createContext()
 const UserUpdateContext = React.createContext()
 
 export function useUser() {
-    return useContext(UserContext)
+  return useContext(UserContext)
 }
 
 export function useUserUpdate() {
-    return useContext(UserUpdateContext)
+  return useContext(UserUpdateContext)
 }
-
-
 
 export function UsersContext({ children }) {
   const [user, setUser] = useState({
@@ -23,12 +21,12 @@ export function UsersContext({ children }) {
 
   const updateUser = (userName, role, jwt, id) => {
     setUser({
-        userName: userName,
-        role: role,
-        jwt: jwt,
-        id: id,
-      })
-}
+      userName: userName,
+      role: role,
+      jwt: jwt,
+      id: id,
+    })
+  }
 
   return (
     <UserContext.Provider value={user}>
@@ -38,4 +36,3 @@ export function UsersContext({ children }) {
     </UserContext.Provider>
   )
 }
-

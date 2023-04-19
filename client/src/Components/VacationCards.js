@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../Contexts/userProvider'
 import EditVacation from './EditVacation'
 import Follow from './Follow'
-import checkUserUtil from '../utils/checkUser.js'
 
 function VacationCards() {
   const user = useUser()
@@ -13,11 +12,36 @@ function VacationCards() {
   const [edit, setEdit] = useState({ edit: false, id: undefined })
 
   const getVacations = () =>
-    
     axios
       .get(`http://localhost:4000/vacations`)
       .then((res) => {
-        setVacationsByGroups(res.data)
+        const vacation = res.data
+
+        if(user.role !== 'admin'){
+        axios.get(`http://localhost:4000/follow/${user.id}&0`).then((res) => {
+          const follows = []
+          if(res.data === 404){
+            setVacationsByGroups(vacation)
+            return
+          }
+          res.data.map((follow, i) => {
+            follows[i] = follow.vacation
+          })
+          const sortVac = vacation.sort((a, b) => {
+            const index1 = follows.indexOf(a.id)
+            const index2 = follows.indexOf(b.id)
+            return (
+              (index1 > -1 ? index1 : Infinity) -
+              (index2 > -1 ? index2 : Infinity)
+            )
+          })
+          setVacationsByGroups(sortVac)
+          return
+        })
+      }else{
+        setVacationsByGroups(vacation)
+      }
+
       })
       .catch(function (error) {
         console.log(error)
@@ -43,21 +67,19 @@ function VacationCards() {
     <div>
       <div className="card-container container flex-wrap">
         {vacationsByGroups.map((vacation, key) => {
-          // const [date, time] = vacation.time_start.split('T')
-          // const [dateNo, endTime] = vacation.time_end.split('T')
           return (
             <div
               className="card"
               key={key}
-              id={`card${key}`}
+              id={`card${vacation.id}`}
               onMouseEnter={(e) => {
-                setStyle({ display: 'block', id: key })
+                setStyle({ display: 'block', id: vacation.id })
               }}
               onMouseLeave={(e) => {
-                setStyle({ display: 'none', id: key })
+                setStyle({ display: 'none', id: vacation.id })
               }}
             >
-              {edit.id === key && edit.edit ? (
+              {edit.id === vacation.id && edit.edit ? (
                 <EditVacation
                   vacation={vacation}
                   setEdit={setEdit}
@@ -66,10 +88,10 @@ function VacationCards() {
                 <div className="card-body">
                   {user.role === 'admin' ? (
                     <div
-                      id={key}
+                      id={vacation.id}
                       className="z-3 position-absolute top-0 end-0 p-1"
                       style={
-                        style.id === key
+                        style.id === vacation.id
                           ? { display: style.display }
                           : { display: 'none' }
                       }
@@ -78,7 +100,7 @@ function VacationCards() {
                         type="button"
                         className="btn btn-outline-info btn-sm"
                         onClick={(e) => {
-                          setEdit({ edit: true, id: key })
+                          setEdit({ edit: true, id: vacation.id })
                         }}
                       >
                         <i className="bi bi-pencil"></i>
@@ -87,7 +109,6 @@ function VacationCards() {
                         type="button"
                         className="btn btn-outline-danger btn-sm m-1"
                         onClick={(e) => {
-                          //   const id = e.currentTarget.parentNode.id
                           if (
                             window.confirm(
                               `Are you sure you want to delete vacation id ${vacation.id}??`
@@ -103,7 +124,7 @@ function VacationCards() {
                     ''
                   )}
                   <h3 className="card-title z-2">
-                    Destination{vacation.id}: <br /> {vacation.destination}
+                    Destination: <br /> {vacation.destination}
                   </h3>
                   <p className="card-text">
                     From Date: {new Date(vacation.date_start).toDateString()}

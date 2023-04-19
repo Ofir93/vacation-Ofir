@@ -1,5 +1,4 @@
-import {Router} from 'express'
-// import { save, find, update, deleteById } from '../controllers/vacations.js'
+import { Router } from 'express'
 import { save, find, deleteById, update } from '../controllers/vacations.js'
 
 const router = Router()
@@ -13,16 +12,6 @@ router.post('/', async (req, res) => {
     res.status(500)
   }
 })
-
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const user = await find(req.params.id)
-//     user.length ? res.send(user) : res.sendStatus(404)
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500)
-//   }
-// })
 
 router.get('/', async (req, res) => {
   try {
@@ -46,18 +35,16 @@ router.patch('/:id', async (req, res) => {
   }
 })
 
-
 router.delete('/:id', async (req, res) => {
-    try {
-      const isDeleted = await deleteById(req.params.id)
-      isDeleted
-        ? res.send(`Vacation ${req.params.id} deleted!`)
-        : res.send('Nothing deleted')
-    } catch (error) {
-      console.log(error)
-      res.status(500)
-    }
-  })
+  try {
+    const isDeleted = await deleteById(req.params.id)
+    isDeleted
+      ? res.send(`Vacation ${req.params.id} deleted!`)
+      : res.send('Nothing deleted')
+  } catch (error) {
+    console.log(error)
+    res.status(500)
+  }
+})
 
-  
 export default router

@@ -1,10 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useHomeUpdate } from '../Contexts/InterfacesContext'
-// import { useUser } from '../Contexts/userProvider'
 
 function AddVacation() {
-  //   const user = useUser()
   const interfacesChange = useHomeUpdate()
 
   const [destination, setDestination] = useState('')
@@ -41,30 +39,30 @@ function AddVacation() {
     //   .get(`http://localhost:4000/vacations`)
     //   .then((res) => {
     //     const id = ++res.data.length
-        axios
-          .post(`http://localhost:4000/vacations`, {
-            // id: id,
-            destination: destination,
-            desc: description,
-            photo: image,
-            dateStart: fromDate,
-            dateEnd: toDate,
-            price: price,
-          })
-          .then((res) => {
-            alert(res.data)
-            console.log(res)
-            if (
-              res.data === 'vacation name already exists' ||
-              res.data === 'Nothing inserted'
-            ) {
-              return
-            }
-            interfacesChange(false, false, true)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+    axios
+      .post(`http://localhost:4000/vacations`, {
+        // id: id,
+        destination: destination,
+        desc: description,
+        photo: image,
+        dateStart: fromDate,
+        dateEnd: toDate,
+        price: price,
+      })
+      .then((res) => {
+        alert(res.data)
+        console.log(res)
+        if (
+          res.data === 'vacation name already exists' ||
+          res.data === 'Nothing inserted'
+        ) {
+          return
+        }
+        interfacesChange(false, false, true)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     //   })
     //   .catch(function (error) {
     //     console.log(error)

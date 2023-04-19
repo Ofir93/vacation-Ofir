@@ -12,15 +12,7 @@ export default class User {
 
   async exists(userName){
     const users = await db.execute(`select user_name from users`)
-    // console.log(users[0].includes({"user_name": userName}));
-    // console.log(users[0]);
-    // console.log(userName);
-    // const result = users[0].map((user) => {
-    //   user === {"user_name": userName}
-    //   return false
-    // })
     const result = users[0].filter(word => word.user_name === userName)
-    // console.log(result);
     if(result.length > 0){
       return undefined
     }
@@ -37,7 +29,6 @@ export default class User {
   async registerUser() {
     const users = await db.execute(`select id from users`)
     const highestId = users[0].length + 1
-    // console.log(users[0].length)
     const query = `insert into users(id, first_name, last_name, user_name, password)
     value (${highestId} ,'${this.firstName}', '${this.lastName}', '${this.userName}','${this.password}')
     `

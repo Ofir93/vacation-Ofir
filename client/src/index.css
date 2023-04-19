@@ -1,101 +1,57 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      text-align: center;
-      background: url("./lib/backgroundPic1.jpg") no-repeat center fixed; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  background: url('./lib/backgroundPic1.jpg') no-repeat center fixed;
+}
 
-  }
+#loginContainer {
+  background: url('./lib/pcyWoman.jpg') center;
+  border: solid 2px black;
+}
 
-  /* #mainC { */
-    /* background: url("./lib/backgroundPic1.jpg") no-repeat center fixed;  */
-    /* height: 100vh; */
-  /* } */
+.card-container {
+  padding-top: 1rem;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+.card {
+  width: 17rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+}
 
-  #loginContainer {
-    background: url("./lib/pcyWoman.jpg")  center; 
-    border: solid 2px black;
-  }
+.greet {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  width: 60%;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border: #000 solid 2px;
+  background-color: green;
+  top: 1rem;
+  z-index: 2;
+  opacity: 0.94;
+}
 
-  /* #mainAdd {
-    padding-top: 1rem;
-    padding-left: 30%;
-    width: 70%;
-  } */
+.greet img {
+  height: 250px;
+}
 
-  .card-container {
-    padding-top: 1rem;
-    /* padding-left: 30%; */
-    width: 70%;
-    display: flex;
-    justify-content: center;
-  }
-  .card{
-    width: 17rem;
-    margin-right: 1rem;
-    margin-top: 0.5rem;
-  }
+.greet h2 {
+  padding-top: 3px;
+}
 
-  .greet {
-    position: absolute;
-    left: 20%;
-    right: 20%;
-    width: 60%;
-    /* height: 30rem; */
-    margin-top: 3rem;
-    padding-top: 1rem;
-    border: #000 solid 2px;
-    background-color: green;
-    top: 1rem;
-    z-index: 2;
-    opacity: 0.94;
-  }
-  
-  .greet img {
-    height: 250px;
-  }
-  
-  .greet h2 {
-    padding-top: 3px;
-  }
-
-  
-  
- /*
-   .btn {
-    text-transform: uppercase;
-    background: red;
-    color: white;
-    padding: 0.375rem 0.75rem;
-    display: inline-block;
-    font-weight: 700;
-    font-size: 1rem;
-    border: black solid;
-    border-radius: 10px;
-  }
- 
-  .meeting {
-    grid-column-gap: 1.5rem;
-    margin: 1.5rem 0;
-    padding: 20px;
-    border: black solid 3px;
-    width: 400px;
-    background-color: blue;
-    border-radius: 30px;
-    color: white;
-  }
-  
-  .meetingsDiv {
-    width: 500px;
-    display: grid;
-  
-  }
-  
-  .label {
-    width: 400px;
-  } */
+.reports {
+  margin-top: 2rem;
+  background-color: azure;
+  width: 70vw;
+  height: 60vh;
+}

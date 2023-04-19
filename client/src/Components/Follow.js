@@ -6,17 +6,12 @@ function Follow({ vacation }) {
   const user = useUser()
 
   const [pressed, setPressed] = useState(false)
-  const [userId, setUserId] = useState(user.id)
-  const [vacId, setVacId] = useState(vacation.id)
 
   const buttonPressed = (
     <button
       className="btn btn-primary"
       onClick={(e) => {
-        console.log(userId, vacId);
-        removeFollow(userId, vacId)
-        //הבעיה היא שברגע הריפרוש התוכן נמחק.
-        //צריך כל פעם לקחת מהJWT
+        removeFollow(user.id, vacation.id)
       }}
     >
       UnFollow <i className="bi bi-star-fill"></i>
@@ -27,8 +22,7 @@ function Follow({ vacation }) {
     <button
       className="btn btn-primary"
       onClick={(e) => {
-        console.log(userId, vacId)
-        addFollow(userId, vacId)
+        addFollow(user.id, vacation.id)
       }}
     >
       Follow <i className="bi bi-star"></i>
@@ -36,62 +30,59 @@ function Follow({ vacation }) {
   )
 
   const addFollow = (userId, VacId) => {
-    axios.post(`http://localhost:4000/follow/`, {
+    axios
+      .post(`http://localhost:4000/follow/`, {
         userId: userId,
-        vacId: VacId
-    })
-    .then((res) => {
-        console.log(res.data);
+        vacId: VacId,
+      })
+      .then((res) => {
         vacation.followers++
         setPressed(true)
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error)
-    })
+      })
   }
 
   const removeFollow = (userId, vacId) => {
     if (!vacation.followers) {
       return alert('error')
-      ///////////////////////////////////
     }
     const deleteFollow = {
-        userId: userId,
-        vacId: vacId
+      userId: userId,
+      vacId: vacId,
     }
-    axios.post(`http://localhost:4000/follow/delFol`, deleteFollow)
-    .then((res) => {
-        console.log(res.data);
+    axios
+      .post(`http://localhost:4000/follow/delFol`, deleteFollow)
+      .then((res) => {
+        console.log(res.data)
         vacation.followers--
         setPressed(false)
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error)
-    })
+      })
   }
-
-
 
   const getFollowers = () => {
     axios
-      .get(`http://localhost:4000/follow/${userId}&${vacId}`)
+      .get(`http://localhost:4000/follow/${user.id}&${vacation.id}`)
       .then((res) => {
-        if(res.data === 404){
-            setPressed(false) 
-            return
-        } 
-        // console.log(res.data);
+        if (res.data === 404) {
+          setPressed(false)
+          return
+        }
         setPressed(true)
-        // setUserId(user.id)
-        // setVacId(vacation.id)
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error)
       })
   }
   useEffect(() => {
     getFollowers()
   }, [0])
+
+  
 
   return (
     <div>

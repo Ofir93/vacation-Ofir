@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import { save, find, update, deleteById } from '../controllers/users.js'
 
 const router = Router()
@@ -47,16 +47,15 @@ router.patch('/:id', async (req, res) => {
   }
 })
 
-
 router.delete('/:id', async (req, res) => {
-    try {
-      const isDeleted = await deleteById(req.params.id)
-      isDeleted
-        ? res.send(`User ${req.params.id} deleted!`)
-        : res.send('Nothing deleted')
-    } catch (error) {
-      console.log(error)
-      res.status(500)
-    }
-  })
+  try {
+    const isDeleted = await deleteById(req.params.id)
+    isDeleted
+      ? res.send(`User ${req.params.id} deleted!`)
+      : res.send('Nothing deleted')
+  } catch (error) {
+    console.log(error)
+    res.status(500)
+  }
+})
 export default router

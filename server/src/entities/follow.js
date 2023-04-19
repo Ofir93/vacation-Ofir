@@ -25,7 +25,7 @@ export default class Follow {
 
   static async find(userId, vacId) {
     const query = `
-    select * from likes where user = ${userId} and vacation = ${vacId}`
+    select * from likes where user = ${userId} ${vacId !== "0" ? `and vacation = ${vacId}` : ''}`
 
     return db.execute(query)
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -11,14 +11,11 @@ const NavbarTop = () => {
   const userModelChange = useUserUpdate()
   const interfacesChange = useHomeUpdate()
 
-  const logOut = ( )=> {
-    userModelChange('','','')
+  const logOut = () => {
+    userModelChange('', '', '')
     interfacesChange(true, false, false)
     window.localStorage.removeItem('jwt')
   }
-  // useEffect(() => {
-  //   logOut()
-  // }, [])
 
   return (
     <div id="navbarC">
@@ -77,13 +74,6 @@ const NavbarTop = () => {
                   >
                     Reports
                   </NavDropdown.Item>
-                  {/* <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item> */}
                 </NavDropdown>
               ) : (
                 ''

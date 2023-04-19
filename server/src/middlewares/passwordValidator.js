@@ -16,9 +16,6 @@ schema
   .has()
   .not()
   .spaces()
-  // .is()
-  // .not()
-  // .oneOf(['Yossi123', 'Ofir4567'])/////////////////////////////////////
 
 export default (req, res, next) => {
   try {
@@ -28,7 +25,7 @@ export default (req, res, next) => {
     if (!errors.length) {
       next()
     } else {
-      return res.status(400).send({ errors })
+      return res.status(400).send({ errors, where: "password-error" })
     }
   } catch (error) {
     console.error(error)
